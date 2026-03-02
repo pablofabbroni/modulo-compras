@@ -4,14 +4,20 @@ from fastapi.responses import FileResponse, StreamingResponse
 from .processor import leer_csv_robusto, preparar_df, procesar_csv, crear_zip
 import io
 
-app = FastAPI(title="Módulo AFIP Compras/Importación")
+import os
 
-# Servir archivos estáticos (frontend)
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app = FastAPI(title="Procesador módulo de compras")
+
+# Obtener la ruta del directorio actual para que los paths sean robustos
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+
+# Servir archivos estáticos
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 @app.get("/")
 async def read_index():
-    return FileResponse("app/static/index.html")
+    return FileResponse(os.path.join(STATIC_DIR, "index.html"))
 
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
