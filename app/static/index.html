@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesador módulo de compras | Libro IVA Digital</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Procesador módulo de compras</h1>
+            <p class="subtitle">Genera archivos TXT para Libro IVA Digital de forma sencilla</p>
+        </header>
+
+        <main>
+            <div id="drop-zone" class="upload-section">
+                <span class="upload-icon">📄</span>
+                <p class="upload-text">Arrastra tu archivo CSV aquí o haz clic para subir</p>
+                <p class="upload-hint">Formatos aceptados: .csv (AFIP Compras o Importación)</p>
+                <input type="file" id="file-input" accept=".csv">
+            </div>
+
+            <div id="status-card" class="status-section card">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Archivo</label>
+                        <span id="info-filename">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Tipo Detectado</label>
+                        <span id="info-type">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Columnas</label>
+                        <span id="info-cols">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Registros</label>
+                        <span id="info-rows">-</span>
+                    </div>
+                </div>
+
+                <div id="action-area">
+                    <button id="process-btn" class="btn btn-primary">
+                        <span id="btn-text">Procesar y Descargar ZIP</span>
+                        <div id="loader" class="loader"></div>
+                    </button>
+                    <p id="error-msg" class="error-message"></p>
+                    <p id="success-msg" class="success-message">¡Procesamiento exitoso! Tu descarga comenzará pronto.
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
