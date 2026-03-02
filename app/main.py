@@ -1,7 +1,10 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, StreamingResponse
-from .processor import leer_csv_robusto, preparar_df, procesar_csv, crear_zip
+try:
+    from app.processor import leer_csv_robusto, preparar_df, procesar_csv, crear_zip
+except ImportError:
+    from processor import leer_csv_robusto, preparar_df, procesar_csv, crear_zip
 import io
 
 import os
@@ -14,6 +17,10 @@ STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 # Servir archivos estáticos
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"}
 
 @app.get("/")
 async def read_index():
