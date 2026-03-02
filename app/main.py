@@ -1,13 +1,22 @@
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, StreamingResponse
-try:
-    from app.processor import leer_csv_robusto, preparar_df, procesar_csv, crear_zip
-except ImportError:
-    from processor import leer_csv_robusto, preparar_df, procesar_csv, crear_zip
 import io
-
 import os
+
+try:
+    # Intentamos importación relativa y absoluta para cubrir todos los escenarios de contenedores
+    try:
+        from .processor import leer_csv_robusto, preparar_df, procesar_csv, crear_zip
+    except (ImportError, ValueError):
+        from app.processor import leer_csv_robusto, preparar_df, procesar_csv, crear_zip
+    logger.info("✅ Processor module loaded successfully")
+except Exception as e:
+    logger.error(f"❌ Error loading processor module: {str(e)}")
 
 app = FastAPI(title="Procesador módulo de compras")
 
