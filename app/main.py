@@ -20,9 +20,13 @@ except Exception as e:
 
 app = FastAPI(title="Procesador módulo de compras")
 
-# Obtener la ruta del directorio actual para que los paths sean robustos
+# Obtener la ruta del directorio actual
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
+
+logger.info(f"📁 BASE_DIR: {BASE_DIR}")
+logger.info(f"📁 STATIC_DIR: {STATIC_DIR}")
+logger.info(f"🏠 Archivos en STATIC_DIR: {os.listdir(STATIC_DIR) if os.path.exists(STATIC_DIR) else 'No existe'}")
 
 # Servir archivos estáticos
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
