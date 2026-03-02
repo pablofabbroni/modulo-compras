@@ -27,6 +27,12 @@ STATIC_DIR = os.path.join(BASE_DIR, "static")
 # Servir archivos estáticos
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
+@app.middleware("http")
+async def log_requests(request, call_next):
+    logger.info(f"Incoming request: {request.method} {request.url.path}")
+    response = await call_next(request)
+    return response
+
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
